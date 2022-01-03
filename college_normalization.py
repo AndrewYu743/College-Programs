@@ -72,14 +72,17 @@ def make_Universities(all_data_elements):
 
     Universities.to_csv('Universities.csv', index=False, na_rep=r'\N')
 
-
+def make_Test_Scores(test_data):
+    print("\tMaking 'Test scores' table")
+    tests = test_data[['UNITID', 'ACTCMMID','SAT_AVG']]
+    tests.to_csv('TestData.csv', index=False, na_rep=r'\N')
 #------------------------ END OF FUNCTION DEFINITIONS --------------------------
 
 
 
 # Set path to IMDb data
 # ---------------------
-data_path = '../'
+data_path = './'
 print('Looking for college data in: ',data_path,'\n')
 
 
@@ -96,3 +99,10 @@ print('Reading Most-Recent-Cohorts-All-Data-Elements.csv')
 all_data_elements = pd.read_csv(os.path.join(data_path, 'Most-Recent-Cohorts-All-Data-Elements.csv'),
                                 na_values='\\N',low_memory=False)
 make_Universities(all_data_elements)
+make_Test_Scores(all_data_elements)
+
+
+
+
+
+
