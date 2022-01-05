@@ -57,12 +57,19 @@ def make_Universities(all_data_elements):
                                       'NUMBRANCH', 'CONTROL', 'ADM_RATE','CURROPER']]
 
     Universities = Universities.rename(columns={
-        #'UNITID':'unit_id',
-        'NUMBRANCH':'Number of Branches',
-        'CURROPER':'Currently Operating'
+        'UNITID':'unit_id',
+        'INSTNM':'inst_name',
+        'CITY':'city',
+        'STABBR':'state',
+        'INSTURL':'url',
+        'CONTROL':'control',
+        'ADM_RATE':'adm_rate',
+        'NUMBRANCH':'num_branches',
+        'CURROPER':'currently_operating'
      })
 
-    Universities.to_csv('Universities.csv', index=False, na_rep=r'\N')
+    #commas in the url mess it up, so we'll use a tsv
+    Universities.to_csv('Universities.tsv', index=False, sep='\t', na_rep=r'\N')
 
 def make_Demographics(all_data_elements):
     print("\tMaking 'Demographics' table")
@@ -71,14 +78,15 @@ def make_Demographics(all_data_elements):
                                       'AGEGE24','FEMALE','MD_FAMINC','MEDIAN_HH_INC']]
 
     Demographics = Demographics.rename(columns={
-        'UGDS':'Undergraduate Degree-seeking Enrollment',
-        'UG':'Total Undergraduate Enrollment',
-        'PAR_ED_PCT_1STGEN':'Percentage First Generation',
-        'AGE_ENTRY':'Avg Age of Entry',
-        'AGEGE24':'Percent over 23 at Entry',
-        'FEMALE':'Share of Female Students',
-        'MD_FAMINC': 'Median Family Income',
-        'MEDIAN_HH_INC': 'Median Household Income'
+        'UNITID':'unit_id',
+        'UGDS':'ug_degree_seeking_enrollment',
+        'UG':'total_ug_enrollment',
+        'PAR_ED_PCT_1STGEN':'percent_first_generation',
+        'AGE_ENTRY':'avg_age_of_entry',
+        'AGEGE24':'percent_over_23_at_entry',
+        'FEMALE':'percent_female',
+        'MD_FAMINC': 'median_family_income',
+        'MEDIAN_HH_INC': 'median_household_income'
 
     })
 
@@ -101,8 +109,14 @@ def make_Program_Percentages(all_data_elements):
 
 def make_Test_Scores(all_data_elements):
     print("\tMaking 'Test scores' table")
-    tests = all_data_elements[['UNITID', 'ACTCMMID','SAT_AVG']]
-    tests.to_csv('TestData.csv', index=False, na_rep=r'\N')
+    Tests = all_data_elements[['UNITID', 'ACTCMMID','SAT_AVG']]
+
+    Tests = Tests.rename(columns={
+        'UNITID':'unit_id',
+        'ACTCMMID':'act_midpoint',
+        'SAT_AVG':'sat_avg'
+    })
+    Tests.to_csv('Test_Scores.csv', index=False, na_rep=r'\N')
 
 def make_Costs(all_data_elements):
     print("\tMaking 'Costs' table")
@@ -112,13 +126,14 @@ def make_Costs(all_data_elements):
                                'TUITFTE','INEXPFTE','AVGFACSAL']]
 
     Costs = Costs.rename(columns={
-        'COSTT4_A':'Avg Cost of Attendance',
-        'COSTT4_P':'Avg Cost of Attendance (Program-Year)',
-        'TUITIONFEE_IN':'In-state Tuition & Fees',
-        'TUITIONFEE_OUT': 'Out-of-state Tuition & Fees',
-        'TUITFTE':'Tuition Revenue per Full-time Student',
-        'INEXPFTE':'Expenditures per Full-time Student',
-        'AVGFACSAL':'Avg Faculty Salary'
+        'UNITID':'unit_id',
+        'COSTT4_A':'avg_cost_of_attendance',
+        'COSTT4_P':'avg_cost_of_attendance_program_year',
+        'TUITIONFEE_IN':'in_state_tuition_and_fees',
+        'TUITIONFEE_OUT': 'out_of_state_tuition_and_fees',
+        'TUITFTE':'tuition_revenue_per_full_time_student',
+        'INEXPFTE':'expenditures_per_full_time_student',
+        'AVGFACSAL':'avg_faculty_salary'
 
     })
     Costs.to_csv('Costs.csv', index=False, na_rep=r'\N')
@@ -133,20 +148,21 @@ def make_Earnings(all_data_elements):
                                   ]]
 
     Earnings = Earnings.rename(columns={
-        'COUNT_NWNE_P6':'Number Not Working 6 Years After',
-        'COUNT_WNE_P6':'Number Working 6 Years After',
-        'MN_EARN_WNE_P6':'Mean Earnings 6 Years After',
-        'MD_EARN_WNE_P6':'Median Earnings 6 Years After',
-        'PCT25_EARN_WNE_P6':'25th Percentile Earnings 6 Years After',
-        'PCT75_EARN_WNE_P6':'75th Percentile Earnings 6 Years After',
-        'SD_EARN_WNE_P6':'Standard Deviation Earnings 6 Years After',
-        'COUNT_NWNE_P10':'Number Not Working 10 Years After',
-        'COUNT_WNE_P10':'Number Working 10 Years After',
-        'MN_EARN_WNE_P10':'Mean Earnings 10 Years After',
-        'MD_EARN_WNE_P10':'Median Earnings 10 Years After',
-        'PCT25_EARN_WNE_P10':'25th Percentile Earnings 10 Years After',
-        'PCT75_EARN_WNE_P10':'75th Percentile Earnings 10 Years After',
-        'SD_EARN_WNE_P10':'Standard Deviation Earnings 10 Years After'
+        'UNITID':'unit_id',
+        'COUNT_NWNE_P6':'number_not_working_6_years_after',
+        'COUNT_WNE_P6':'number_working_6_years_after',
+        'MN_EARN_WNE_P6':'mean_earnings_6_years_after',
+        'MD_EARN_WNE_P6':'median_earnings_6_years_after',
+        'PCT25_EARN_WNE_P6':'percentile_25_earnings_6_years_after',
+        'PCT75_EARN_WNE_P6':'percentile_75_earnings_6_years_after',
+        'SD_EARN_WNE_P6':'standard_deviation_earnings_6_years_after',
+        'COUNT_NWNE_P10':'number_not_working_10_years_after',
+        'COUNT_WNE_P10':'number_working_10_years_after',
+        'MN_EARN_WNE_P10':'mean_earnings_10_years_after',
+        'MD_EARN_WNE_P10':'median_earnings_10_years_after',
+        'PCT25_EARN_WNE_P10':'percentile_25_earnings_10_years_after',
+        'PCT75_EARN_WNE_P10':'percentile_75_earnings_10_years_after',
+        'SD_EARN_WNE_P10':'standard_deviation_earnings_10_years_after'
     })
     Earnings.to_csv('Earnings.csv', index=False, na_rep=r'\N')
 
@@ -162,9 +178,10 @@ def make_Broad_CIP(txt_file):
             cip.append(int(parsed[0].split('n')[1]))
             subject_area.append(parsed[1])
 
-    Broad_CIP = pd.DataFrame({'CIP 2-Digit':cip, 'Broad Subject Area':subject_area})
+    Broad_CIP = pd.DataFrame({'cip_2_digit':cip, 'broad_subject_area':subject_area})
 
-    Broad_CIP.to_csv('Broad_CIP_Areas.csv', index=False)
+    #tsv b/c commas in subject names
+    Broad_CIP.to_csv('Broad_CIP_Areas.tsv', sep='\t', index=False)
 
 def make_Degrees_Offered(field_of_study):
     print("\tMaking 'Degrees Offered' table")
@@ -176,9 +193,10 @@ def make_Degrees_Offered(field_of_study):
                             #we use info for 2 yrs after completion of highest credential b/c more long-term
 
     Degrees_Offered = Degrees_Offered.rename(columns={
-        'EARN_COUNT_NWNE_HI_2YR':'Number Not Working 2 Years After',
-        'EARN_COUNT_WNE_HI_2YR':'Number Working 2 Years After',
-        'EARN_MDN_HI_2YR':'Median Earnings 2 Years After'
+        'UNITID':'unit_id',
+        'EARN_COUNT_NWNE_HI_2YR':'number_not_working_2_years_after',
+        'EARN_COUNT_WNE_HI_2YR':'number_working_2_years_after',
+        'EARN_MDN_HI_2YR':'median_earnings_2_years_after'
     })
 
     Degrees_Offered.to_csv('Degrees_Offered.csv', index=False, na_rep=r'\N')
@@ -189,7 +207,8 @@ def make_Specific_CIP_Codes(field_of_study):
     #we'll need to only have unique columns in SQL
     Specific_CIP = field_of_study[['CIPCODE', 'CIPDESC']]
 
-    Specific_CIP.to_csv('Specific_CIP_Codes.csv', index=False, na_rep=r'\N')
+    #tsv b/c commas in subject names
+    Specific_CIP.to_csv('Specific_CIP_Codes.tsv', sep='\t', index=False, na_rep=r'\N')
 
 #------------------------ END OF FUNCTION DEFINITIONS --------------------------
 
@@ -223,8 +242,8 @@ make_Earnings(all_data_elements)
 
 
 
-# print('Reading cip.txt')
-# make_Broad_CIP('cip.txt')
+print('Reading cip.txt')
+make_Broad_CIP('cip.txt')
 
 print('Reading Most-Recent-Cohorts-Field-of-Study.csv')
 field_of_study = pd.read_csv(os.path.join(data_path, 'Most-Recent-Cohorts-Field-of-Study.csv'),
