@@ -21,19 +21,19 @@ mysql> SOURCE /Users/lappy/Git_repos_mine/MySQL_IMDb_Project/imdb-index-tables.s
 */
 
 -- Delete IMDb database if necessary
-DROP DATABASE IF EXISTS IMDb;
+DROP DATABASE IF EXISTS CollegeScorecard;
 
 -- Create IMDb database
 
-CREATE DATABASE IMDb;
+CREATE DATABASE CollegeScorecard;
 
 -- Use IMDb database
 
-USE IMDb;
+USE CollegeScorecard;
 
 -- Character set
 -- want to be able to distinguish text with accents
-ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
+-- ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 -- Drop old tables if they exist
 
@@ -54,15 +54,16 @@ ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
 
 -- Create tables only
 
-CREATE TABLE Titles (
-  title_id 			  VARCHAR(255) NOT NULL, -- not null bc PK
-  title_type 			VARCHAR(50),
-  primary_title 	TEXT, -- some are really long
-  original_title 	TEXT, -- some are really long
-  is_adult 			  BOOLEAN,
-  start_year			INTEGER, -- add better domain here (>1800)
-  end_year 			  INTEGER, -- add better domain here (>0)
-  runtime_minutes	INTEGER -- add better domain here (>0)
+CREATE TABLE Universities (
+  UNITID 			  INTEGER NOT NULL, -- not null bc PK
+  INSTNM 	TEXT, 
+  CITY 	VARCHAR(200), 
+  STABBR VARCHAR(50),
+  INSTURL 			  VARCHAR(200),
+  NUMBRANCH			TINYINT, -- add better domain here (>1800)
+  CONTROL 			  TINYINT, -- add better domain here (>0)
+  ADM_RATE	FLOAT, -- add better domain here (>0)
+  CURROPER  TINYINT
 
 );
 
