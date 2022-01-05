@@ -221,6 +221,8 @@ make_Test_Scores(all_data_elements)
 make_Costs(all_data_elements)
 make_Earnings(all_data_elements)
 
+
+
 # print('Reading cip.txt')
 # make_Broad_CIP('cip.txt')
 
@@ -229,6 +231,4 @@ field_of_study = pd.read_csv(os.path.join(data_path, 'Most-Recent-Cohorts-Field-
                              na_values='\\N',low_memory=False)
 make_Degrees_Offered(field_of_study)
 make_Specific_CIP_Codes(field_of_study)
-
-
 
