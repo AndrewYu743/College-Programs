@@ -127,15 +127,14 @@ CREATE TABLE Broad_CIP_Areas(
 	PRIMARY KEY (cip_2_digit)
 );
 
+-- DROP TABLE Degrees_Offered;
 CREATE TABLE Degrees_Offered(
-			degree_id int unsigned not null auto_increment,
             unit_id								Integer,
 			cipcode								Integer,
             credlev								TINYINT,
             number_not_working_2_years_after 	Integer,
 			number_working_2_years_after		Integer,	
 			median_earnings_2_years_after 		Integer,
-            PRIMARY KEY (degree_id),
             FOREIGN KEY (unit_id) REFERENCES Universities(unit_id),
             FOREIGN KEY (cipcode) REFERENCES Specific_CIP_Codes(cipcode)
 

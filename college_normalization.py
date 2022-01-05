@@ -210,6 +210,13 @@ def make_Specific_CIP_Codes(field_of_study):
     #tsv b/c commas in subject names
     Specific_CIP.to_csv('Specific_CIP_Codes.tsv', sep='\t', index=False, na_rep=r'\N')
 
+# Generic function, will be used to replace "PrivacySuppressed" values with NULL
+def replace_string(filename, outfilename, old_string, new_string):
+    with open(filename, "rt") as fin:
+        with open(outfilename, "wt") as fout:
+            for line in fin:
+                fout.write(line.replace(old_string, new_string))
+
 #------------------------ END OF FUNCTION DEFINITIONS --------------------------
 
 
@@ -226,12 +233,21 @@ print('Looking for college data in: ',data_path,'\n')
 #data_files = unzip_files(data_path)
 
 
-# Read in and process all college data files
+# Replace "PrivacySuppressed" w/ NULL in the college files and create new csvs
+ade_filename = 'Modified-ADE.csv'
+fos_filename = 'Modified-FoS.csv'
+replace_string('Most-Recent-Cohorts-All-Data-Elements.csv',
+               ade_filename, 'PrivacySuppressed', 'NULL')
+replace_string('Most-Recent-Cohorts-Field-of-Study.csv',
+               fos_filename, 'PrivacySuppressed', 'NULL')
+
+# Read the college data and create csvs for our tables
 # ---------------------------------------
 
 # all-data-elements.csv
-print('Reading Most-Recent-Cohorts-All-Data-Elements.csv')
-all_data_elements = pd.read_csv(os.path.join(data_path, 'Most-Recent-Cohorts-All-Data-Elements.csv'),
+
+print(f'Reading {ade_filename}')
+all_data_elements = pd.read_csv(os.path.join(data_path, ade_filename),
                                 na_values='\\N',low_memory=False)
 make_Universities(all_data_elements)
 make_Demographics(all_data_elements)
@@ -245,8 +261,8 @@ make_Earnings(all_data_elements)
 print('Reading cip.txt')
 make_Broad_CIP('cip.txt')
 
-print('Reading Most-Recent-Cohorts-Field-of-Study.csv')
-field_of_study = pd.read_csv(os.path.join(data_path, 'Most-Recent-Cohorts-Field-of-Study.csv'),
+print(f'Reading {fos_filename}')
+field_of_study = pd.read_csv(os.path.join(data_path, fos_filename),
                              na_values='\\N',low_memory=False)
 make_Degrees_Offered(field_of_study)
 make_Specific_CIP_Codes(field_of_study)

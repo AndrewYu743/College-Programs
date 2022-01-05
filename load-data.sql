@@ -25,9 +25,6 @@ To use the IMDb scripts:
 -- SHOW VARIABLES LIKE "local_infile";
 SET GLOBAL local_infile = 1;
 
--- SET SQL_SAFE_UPDATES = 0;
--- delete from Universities;
--- SET SQL_SAFE_UPDATES = 1;
 
 LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Universities.tsv'
 INTO TABLE Universities
@@ -64,20 +61,31 @@ INTO TABLE Earnings
 COLUMNS TERMINATED BY ','
 IGNORE 1 LINES;
 
+-- SET SQL_SAFE_UPDATES = 0;
+-- delete from Degrees_Offered;
+-- delete from Broad_CIP_Areas;
+-- delete from Specific_CIP_Codes;
+-- SET SQL_SAFE_UPDATES = 1;
+
+LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Broad_CIP_Areas.tsv'
+INTO TABLE Broad_CIP_Areas
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '"\n' 
+IGNORE 1 LINES;
+
+-- this will throw a warning for duplicate entries
+LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Specific_CIP_Codes.tsv'
+INTO TABLE Specific_CIP_Codes
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n' 
+IGNORE 1 LINES;
+
 LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Degrees_Offered.csv'
 INTO TABLE Degrees_Offered
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n' 
 IGNORE 1 LINES;
 
-LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Broad_CIP_Areas.tsv'
-INTO TABLE Broad_CIP_Areas
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n' 
-IGNORE 1 LINES;
-
-LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Specific_CIP_Codes.tsv'
-INTO TABLE Specific_CIP_Codes
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n' 
-IGNORE 1 LINES;
+ALTER TABLE Degrees_Offered ADD degree_id int unsigned PRIMARY KEY auto_increment FIRST;
+-- ALTER TABLE Degrees_Offered
+-- ADD CONSTRAINT PK_Degrees_Offered PRIMARY KEY (degree_id);
