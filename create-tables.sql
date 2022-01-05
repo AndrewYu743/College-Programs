@@ -1,153 +1,121 @@
-/*
-This script creates the IMDb database tables.
+DROP DATABASE IF EXISTS College;
 
-To use the IMDb scripts:
+CREATE DATABASE College;
 
-1) Open MySQL in terminal:
-$ mysql -u root -p --local-infile
-
-2) Create IMDb data base in MySQL:
-mysql> SOURCE /Users/lappy/Git_repos_mine/MySQL_IMDb_Project/imdb-create-tables.sql
-
-3) Load data using this script in MySQL:
-mysql> SOURCE /Users/lappy/Git_repos_mine/MySQL_IMDb_Project/imdb-load-data.sql
-
-4) Add constraints to the IMDb database in MySQL
-mysql> SOURCE /Users/lappy/Git_repos_mine/MySQL_IMDb_Project/imdb-add-constraints.sql
-
-5) Add indexes to the IMDb database in MySQL
-mysql> SOURCE /Users/lappy/Git_repos_mine/MySQL_IMDb_Project/imdb-index-tables.sql
-
-*/
-
--- Delete IMDb database if necessary
-DROP DATABASE IF EXISTS CollegeScorecard;
-
--- Create IMDb database
-
-CREATE DATABASE CollegeScorecard;
-
--- Use IMDb database
-
-USE CollegeScorecard;
-
--- Character set
--- want to be able to distinguish text with accents
--- ALTER DATABASE IMDb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
-
--- Drop old tables if they exist
-
--- DROP TABLE IF EXISTS Titles;
--- DROP TABLE IF EXISTS Title_ratings;
--- DROP TABLE IF EXISTS Aliases;
--- DROP TABLE IF EXISTS Alias_types;
--- DROP TABLE IF EXISTS Alias_attributes;
--- DROP TABLE IF EXISTS Episode_belongs_to;
--- DROP TABLE IF EXISTS Title_genres;
--- DROP TABLE IF EXISTS Names_;
--- DROP TABLE IF EXISTS Name_worked_as;
--- DROP TABLE IF EXISTS Had_role;
--- DROP TABLE IF EXISTS Known_for;
--- DROP TABLE IF EXISTS Directors;
--- DROP TABLE IF EXISTS Writers;
--- DROP TABLE IF EXISTS Principals;
-
--- Create tables only
+USE COLLEGE;
 
 CREATE TABLE Universities (
-  UNITID 			  INTEGER NOT NULL, -- not null bc PK
+  unit_id 			  INTEGER NOT NULL, -- not null bc PK
   INSTNM 	TEXT, 
   CITY 	VARCHAR(200), 
   STABBR VARCHAR(50),
   INSTURL 			  VARCHAR(200),
-  NUMBRANCH			TINYINT, -- add better domain here (>1800)
+  Number_of_Branches			TINYINT, -- add better domain here (>1800)
   CONTROL 			  TINYINT, -- add better domain here (>0)
   ADM_RATE	FLOAT, -- add better domain here (>0)
-  CURROPER  TINYINT
+  currently_operating  TINYINT
 
 );
+CREATE TABLE Test_Scores (
+UNITID				Integer NOT NULL,
+ACTCMMID			float,
+SAT_AVG				float
 
-CREATE TABLE Title_ratings (
-  title_id 			  VARCHAR(255) NOT NULL, -- not null bc PK
-  average_rating	FLOAT,
-  num_votes			  INTEGER
+
 );
-
-CREATE TABLE Aliases (
-  title_id          VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering          INTEGER NOT NULL, -- not null bc PK
-  title             TEXT NOT NULL,
-  region				    CHAR(4),
-  language          CHAR(4),
-  is_original_title	BOOLEAN
+CREATE TABLE Demographics(
+unit_id 				Integer NOT NULL,
+ug_degree_seeking_enrollment Integer,
+total_undergraduate_enrollment Integer,
+percentage_first_generation	 	float,
+avg_age_of_entry				Integer,
+percent_over_23_at_entry		float,
+share_of_female_students 		float,
+median_family_income			integer,
+median_household_income			integer
 );
-
-CREATE TABLE Alias_types (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering			INTEGER NOT NULL, -- not null bc PK
-  type				  VARCHAR(255) NOT NULL-- Only stored if not null
+CREATE TABLE Program_Percentages(
+	unit_id 				Integer NOT NULL,
+	pcip_1						float,
+    pcip_3						float,
+    pcip_4						float,
+    pcip_5						float,
+    pcip_9						float,
+    pcip_10						float, 
+	pcip_11						float,
+	pcip_12						float,
+    pcip_13						float,
+    pcip_14						float,
+	pcip_15						float,
+	pcip_16						float,
+    pcip_19						float,
+	pcip_22						float,
+    pcip_23						float,
+    pcip_24						float,
+	pcip_25						float,
+	pcip_26						float,
+	pcip_27						float,
+    pcip_29						float,
+	pcip_30						float,
+	pcip_31						float,
+	pcip_38						float,
+	pcip_39						float,
+	pcip_40						float,
+	pcip_41						float,
+	pcip_42						float,
+	pcip_43						float,
+	pcip_44						float,
+	pcip_45						float,
+	pcip_46						float,
+	pcip_47						float,
+	pcip_48						float,
+	pcip_49						float,
+	pcip_50						float,
+	pcip_51						float,
+    pcip_52						float,
+	pcip_54						float
 );
+CREATE TABLE Costs(
+		unit_id 									Integer NOT NULL,
+		avg_cost_of_attendance						integer,
+        avg_cost_of_attendance_Program_Year			integer,
+        in_state_tuition_and_fees					integer,
+        out_of_state_tuition_and_Fees				integer,
+        tuition_revenue_per_full_time_student		integer	,
+		expenditures_per_full_time_student			integer,
+        avg_faculty_salary							integer
 
-CREATE TABLE ALias_attributes (
-  title_id			VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering			INTEGER NOT NULL, -- not null bc PK
-  attribute			VARCHAR(255) NOT NULL -- only stored if not null
+
 );
+CREATE TABLE Earnings(
+		unit_id 				Integer NOT NULL,
+        number_not_working_6_years_after integer,
+        number_working_6_years_after 		integer,
+        mean_earnings_6_years_after 		integer,	
+		median_earnings_6_years_after		integer,
+        25th_percentile_earnings_6_years_after  integer,
+        75th_percentile_earnings_6_years_after	integer,
+        standard_deviation_earnings_6_years_after	integer,
+        number_not_working_10_years_after			integer,
+        number_working_10_years_after			integer,	
+		mean_earnings_10_years_after			integer,
+        median_earnings_10_years_after			integer,
+       25th_percentile_earnings_10_years_after	integer,
+      75th_percentile_earnings_10_years_after	integer,
+	   standard_deviation_earnings_10_years_after	integer
 
-CREATE TABLE Episode_belongs_to (
-  episode_title_id          VARCHAR(255) NOT NULL, -- not null bc PK
-  parent_tv_show_title_id   VARCHAR(255) NOT NULL,
-  season_number             INTEGER,
-  episode_number            INTEGER
+
 );
+CREATE TABLE Degrees_Earned(
+			unit_id 				Integer NOT NULL,
+			cipcode								Integer,
+            credlev								TINYINT,
+            number_not_working_2_years_after 	Integer,
+			number_working_2_years_after		Integer,	
+			median_earnings_2_years_after 		Integer
 
-CREATE TABLE Title_genres (
-  title_id    VARCHAR(255) NOT NULL, -- not null bc PK
-  genre				VARCHAR(255) NOT NULL -- not null bc PK
 );
-
--- Names and name is a reserved word in MySQL, so we add an underscore
-
-CREATE TABLE Names_ (
-  name_id       VARCHAR(255) NOT NULL, -- not null bc PK
-  name_         VARCHAR(255) NOT NULL, -- everybody has a name
-  birth_year    SMALLINT, -- add a better domain here
-  death_year    SMALLINT -- add a better domain here
-);
-
-CREATE TABLE Name_worked_as (
-  name_id       VARCHAR(255) NOT NULL, -- not null bc PK
-  profession    VARCHAR(255) NOT NULL -- not null bc PK
-);
-
--- NOTE: All 3 must must be used as the primary key
--- role is a reserved word in MySQL, so we add an underscore
-
-CREATE TABLE Had_role (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  name_id       VARCHAR(255) NOT NULL, -- not null bc PK
-  role_         TEXT NOT NULL -- not null bc PK
-);
-
-CREATE TABLE Known_for (
-  name_id       VARCHAR(255) NOT NULL, -- not null bc PK
-  title_id      VARCHAR(255) NOT NULL -- not null bc PK
-);
-
-CREATE TABLE Directors (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  name_id       VARCHAR(255) NOT NULL -- not null bc PK
-);
-
-CREATE TABLE Writers (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  name_id       VARCHAR(255) NOT NULL -- not null bc PK
-);
-
-CREATE TABLE Principals (
-  title_id      VARCHAR(255) NOT NULL, -- not null bc PK
-  ordering      TINYINT NOT NULL, -- not null bc PK
-  name_id       VARCHAR(255) NOT NULL,
-  job_category  VARCHAR(255),
-  job           TEXT
-);
+CREATE TABLE Make_Specific_CIP_Code(
+	cipcode								Integer,
+	cipdesc								VARCHAR(200)
+)
