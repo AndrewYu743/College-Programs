@@ -107,7 +107,7 @@ CREATE TABLE Earnings(
 
 );
 CREATE TABLE Degrees_Earned(
-			unit_id 				Integer NOT NULL,
+			degree_id int unsigned not null auto_increment,
 			cipcode								Integer,
             credlev								TINYINT,
             number_not_working_2_years_after 	Integer,
