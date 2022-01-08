@@ -258,8 +258,8 @@ make_Earnings(all_data_elements)
 
 
 
-print('Reading cip.txt')
-make_Broad_CIP('cip.txt')
+# print('Reading cip.txt')
+# make_Broad_CIP('cip.txt')
 
 print(f'Reading {fos_filename}')
 field_of_study = pd.read_csv(os.path.join(data_path, fos_filename),

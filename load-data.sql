@@ -80,6 +80,7 @@ FIELDS TERMINATED BY '\t'
 LINES TERMINATED BY '\n' 
 IGNORE 1 LINES;
 
+-- will throw warning b/c most rows have lots of nulls
 LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Degrees_Offered.csv'
 INTO TABLE Degrees_Offered
 FIELDS TERMINATED BY ','
