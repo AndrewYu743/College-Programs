@@ -6,9 +6,9 @@ import os
 mydb = mysql.connector.connect(
     host='localhost',
     user='root',
-    passwd='your password here',
+    passwd='your pw here',
     auth_plugin='mysql_native_password',
-    database='IMDb'
+    database='College'
 )
 
 cursor = mydb.cursor()
