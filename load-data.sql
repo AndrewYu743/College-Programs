@@ -1,36 +1,22 @@
 /*
-This script loads normalised IMDb data into IMDb database tables created by
-using the script imdb-create-tables.sql.
 
-To use the IMDb scripts:
+Here we load data from csv/tsv files
+into the tables created by create-tables.sql
 
-1) Open MySQL in terminal:
- $ mysql -u root -p --local-infile
-
-2) Create IMDb data base in MySQL:
- mysql> SOURCE /Users/william/Projects/college-db/College-Programs/imdb-create-tables.sql
-
-3) Load data using this script in MySQL:
- mysql> SOURCE /Users/william/Projects/college-db/College-Programs/imdb-load-data.sql
-
-4) Add constraints to the IMDb database in MySQL
- mysql> SOURCE /Users/william/Projects/college-db/College-Programs/imdb-add-constraints.sql
-
- 5) Add indexes to the IMDb database in MySQL
- mysql> SOURCE /Users/william/Projects/college-db/College-Programs/imdb-index-tables.sql
+Be sure to change the file paths to the
+absolute path for your machine
  
 */
 
 
 -- SHOW VARIABLES LIKE "local_infile";
-SET GLOBAL local_infile = 1;
-
+SET GLOBAL local_infile = 1; -- this enables us to read in files
 
 LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Universities.tsv'
 INTO TABLE Universities
-FIELDS TERMINATED BY '\t'
+FIELDS TERMINATED BY '\t' -- some are tsvs, some are csvs; we should standardize that later
 LINES TERMINATED BY '\n' 
-IGNORE 1 LINES;
+IGNORE 1 LINES; -- the first line of data is column names, which we will ignore when reading in
 
 LOAD DATA LOCAL INFILE  '/Users/william/Projects/college-db/College-Programs/Test_Scores.csv'
 INTO TABLE Test_Scores
@@ -87,6 +73,5 @@ FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n' 
 IGNORE 1 LINES;
 
+-- Add our own degree_id column as the primary key, with the numbers filled in for us
 ALTER TABLE Degrees_Offered ADD degree_id int unsigned PRIMARY KEY auto_increment FIRST;
--- ALTER TABLE Degrees_Offered
--- ADD CONSTRAINT PK_Degrees_Offered PRIMARY KEY (degree_id);

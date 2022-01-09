@@ -1,52 +1,17 @@
-# Imports
-# -------
-import numpy as np
+# college_normalization.py
+# ------------------------
+# This file takes Most-Recent-Cohorts-All-Data-Elements.csv and
+# Most-Recent-Cohorts-Field-Of-Study.csv from the College Scorecard data and
+# outputs the csvs/tsvs for the normalized tables we will use in our SQL queries
+
+# import numpy as np
 import pandas as pd
 import os
-import gzip
-import shutil
+# import gzip
+# import shutil
 
 
-
-
-
-
-#William's section
-#===============================================================================
-# create_csvs.py
-# ------------------------------------------------------------------------------
-#
-# Author: D. L. Whittenbury
-# Date created: 14/1/2020
-# Date last modified: 6/2/2020
-# Version: 1.0
-#
-#-------------------------------------------------------------------------------
-# This script was written for the MySQL_IMDb_Project to preprocess the
-# raw IMDb data. The output of this script will then be used as input
-# into a MySQL database.
-#
-# This script does the following:
-# - Reads in IMDb data files
-# - Cleans and normalises IMDb data
-# - Ouputs TSV files for the designed logical schema
-#
-# Run in terminal:
-# $ python imdb_converter.py
-#
-# Run in python console:
-# $ python
-# >>> exec(open('imdb_converter.py').read())
-#
-# Run in ipython console:
-# $ ipython
-# run imdb_converter.py
-#
-#===============================================================================
-
-
-
-# Helper functions
+# Functions to create each output file
 #------------------
 
 def make_Universities(all_data_elements):
@@ -228,7 +193,7 @@ data_path = './'
 print('Looking for college data in: ',data_path,'\n')
 
 
-# Unzip IMDb data files
+# Unzip data files
 #----------------------
 #data_files = unzip_files(data_path)
 
