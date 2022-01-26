@@ -87,8 +87,12 @@ CREATE TABLE Program_Percentages(
     PRIMARY KEY (unit_id)
 );
 
+-- drop table Costs;
+
 CREATE TABLE Costs(
 		unit_id 									int NOT NULL,
+        avg_net_price_public						int,
+        avg_net_price_private						int,
 		avg_cost_of_attendance						int,
         avg_cost_of_attendance_program_year			int,
         in_state_tuition_and_fees					int,
