@@ -87,11 +87,13 @@ def make_Costs(all_data_elements):
     print("\tMaking 'Costs' table")
 
     #typically if COSTT4_A is null, COSTT4_P has something
-    Costs = all_data_elements[['UNITID','COSTT4_A','COSTT4_P','TUITIONFEE_IN','TUITIONFEE_OUT',
+    Costs = all_data_elements[['UNITID', 'NPT4_PUB', 'NPT4_PRIV', 'COSTT4_A','COSTT4_P','TUITIONFEE_IN','TUITIONFEE_OUT',
                                'TUITFTE','INEXPFTE','AVGFACSAL']]
 
     Costs = Costs.rename(columns={
         'UNITID':'unit_id',
+        'NPT4_PUB':'avg_net_price_public',
+        'NPT4_PRIV':'avg_net_price_private',
         'COSTT4_A':'avg_cost_of_attendance',
         'COSTT4_P':'avg_cost_of_attendance_program_year',
         'TUITIONFEE_IN':'in_state_tuition_and_fees',
@@ -214,21 +216,21 @@ replace_string('Most-Recent-Cohorts-Field-of-Study.csv',
 print(f'Reading {ade_filename}')
 all_data_elements = pd.read_csv(os.path.join(data_path, ade_filename),
                                 na_values='\\N',low_memory=False)
-make_Universities(all_data_elements)
-make_Demographics(all_data_elements)
-make_Program_Percentages(all_data_elements)
-make_Test_Scores(all_data_elements)
+# make_Universities(all_data_elements)
+# make_Demographics(all_data_elements)
+# make_Program_Percentages(all_data_elements)
+# make_Test_Scores(all_data_elements)
 make_Costs(all_data_elements)
-make_Earnings(all_data_elements)
+# make_Earnings(all_data_elements)
 
 
 
 # print('Reading cip.txt')
 # make_Broad_CIP('cip.txt')
 
-print(f'Reading {fos_filename}')
-field_of_study = pd.read_csv(os.path.join(data_path, fos_filename),
-                             na_values='\\N',low_memory=False)
-make_Degrees_Offered(field_of_study)
-make_Specific_CIP_Codes(field_of_study)
+# print(f'Reading {fos_filename}')
+# field_of_study = pd.read_csv(os.path.join(data_path, fos_filename),
+#                              na_values='\\N',low_memory=False)
+# make_Degrees_Offered(field_of_study)
+# make_Specific_CIP_Codes(field_of_study)
 
